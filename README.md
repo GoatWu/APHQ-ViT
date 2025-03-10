@@ -73,6 +73,8 @@ python test_quant.py --model vit_small --config ./configs/3bit/best.py --dataset
 
 ## Results
 
+Below are the experimental results of our proposed APHQ-ViT that you should get on ImageNet dataset. Checkpoints are available in [Google Drive](https://drive.google.com/drive/folders/1w6KOlOmkx6HoTPFBJCk1mMN_ltsfYuai?usp=drive_link).
+
 | Model | **Full Prec.** | **MLP Recon.** | **W4/A4** | **W3/A3** |
 |:----------:|:--------------:|:--------------:|:---------:|:---------:|
 | **ViT-S**  | 81.39          | 80.90          | 76.07     | 63.17     |
