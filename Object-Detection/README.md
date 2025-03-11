@@ -1,6 +1,6 @@
-## AdaLog: Adaptive Logarithm Base Searching with Jacobian Guided Metric for Vision Transformer Post-Train Quantization
+## APHQ-ViT: Post-Training Quantization with Average Perturbation Hessian Based Reconstruction for Vision Transformers
 
-This repository is adopted from [Swin-Transformer-Object-Detection](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection) repo. The pretrained checkpoints are also available for download here.
+This repository is adopted from [Swin-Transformer-Object-Detection](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection) repo.
 
 ## Getting Started
 
