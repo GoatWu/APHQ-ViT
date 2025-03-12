@@ -49,7 +49,7 @@ python tools/test.py configs/swin/mask_rcnn_swin_tiny_patch4_window7_mstrain_480
 
 ## Results
 
-Below are the experimental results of our proposed RepQ-ViT that you should get on COCO dataset.
+Below are the experimental results of our proposed APHQ-ViT on COCO dataset.
 
 | Model                    | Full Prec.<br>(AP<sup>box</sup> / AP<sup>mask</sup>) | MLP Recon.<br>(AP<sup>box</sup> / AP<sup>mask</sup>) | W4/A4<br>(AP<sup>box</sup> / AP<sup>mask</sup>) |
 |:------------------------:|:-----------:|:-----------:|:-----------:|
