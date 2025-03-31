@@ -246,7 +246,6 @@ class BlockReconstructor(QuantCalibrator):
             hook.remove()
         block.raw_grad = (raw_grads[0] - raw_grads[1]).abs()
         block.raw_grad = block.raw_grad.mean(dim=0, keepdim=True) if self.use_mean_hessian else block.raw_grad
-        block.raw_grad = block.raw_grad * block.raw_grad.numel() / block.raw_grad.sum()
         
     def init_block_brecq_hessian(self, block, full_block, name, device):
         logging.info('initializing brecq hessian ...')
@@ -264,7 +263,6 @@ class BlockReconstructor(QuantCalibrator):
         raw_grads = torch.cat(full_block.tmp_grad, dim=0)
         full_block.tmp_grad = None
         block.raw_grad = raw_grads.abs().pow(2)
-        block.raw_grad = block.raw_grad * block.raw_grad.numel() / block.raw_grad.sum()
         hook.remove()
         self.replace_block(full_block, block)
         for _name, _block in self.blocks.items():
@@ -394,6 +392,7 @@ class LossFunction:
 
         self.temp_decay = LinearTempDecay(max_count, rel_start_decay=warmup + (1 - warmup) * decay_start,
                                           start_b=b_range[0], end_b=b_range[1])
+        self.init_loss = 0
         self.count = 0
     
     @staticmethod
@@ -420,11 +419,11 @@ class LossFunction:
         if count:
             self.count += 1
         if self.rec_loss == 'mse':
-            rec_loss = self.lp_loss(pred, tgt, p=self.p) / 10
+            rec_loss = self.lp_loss(pred, tgt, p=self.p)
         elif self.rec_loss == 'mae':
-            rec_loss = self.lp_loss(pred, tgt, p=1.0) / 10
+            rec_loss = self.lp_loss(pred, tgt, p=1.0)
         elif self.rec_loss in ['hessian_brecq', 'hessian_perturb']:
-            rec_loss = ((pred - tgt).pow(2) * grad.abs()).sum(1).mean() / 10
+            rec_loss = ((pred - tgt).pow(2) * grad.abs()).mean()
             
         elif self.rec_loss == 'kl_div':
             rec_loss = F.kl_div(F.log_softmax(pred, dim=-1), F.softmax(tgt, dim=-1).detach(), reduction="batchmean")
@@ -442,7 +441,9 @@ class LossFunction:
                     round_loss += self.weight * (1 - ((round_vals - .5).abs() * 2).pow(b)).sum()
         else:
             raise NotImplementedError
-
+        if self.count == 1:
+            self.init_loss = rec_loss.item()
+        rec_loss = rec_loss * 2 / self.init_loss
         total_loss = rec_loss + round_loss
         if self.count == 1 or self.count % 500 == 0:
             print('Total loss:\t{:.3f} (rec:{:.3f}, round:{:.3f})\tb={:.2f}\tcount={}'.format(
