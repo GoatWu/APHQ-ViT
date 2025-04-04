@@ -1,6 +1,6 @@
 ## APHQ-ViT: Post-Training Quantization with Average Perturbation Hessian Based Reconstruction for Vision Transformers
 
-This repository contains the official PyTorch implementation for the CVPR 2025 paper "APHQ-ViT: Post-Training Quantization with Average Perturbation Hessian Based Reconstruction for Vision Transformers". The code was modified based on [AdaLog](https://github.com/GoatWu/AdaLog).
+This repository contains the official PyTorch implementation for the CVPR 2025 paper "[APHQ-ViT: Post-Training Quantization with Average Perturbation Hessian Based Reconstruction for Vision Transformers](https://arxiv.org/abs/2504.02508)". The code was modified based on [AdaLog](https://github.com/GoatWu/AdaLog).
 
 ![overview](./assets/overview.png)
 
@@ -51,7 +51,7 @@ python test_quant.py --model <MODEL> --config <CONFIG_FILE> --dataset <DATA_DIR>
 
 - `--calibrate` and `--load-calibrate-checkpoint <CALIB_CKPT>`: A `mutually_exclusive_group` to choose between quantizing an existing model or directly load a calibrated model. The default selection is `--calibrate`.
 
-- `--optimize`: Wether to perform Adaround optimization after calibration.
+- `--optimize`: Whether to perform Adaround optimization after calibration.
 
 Example: Optimize the model after reconstruction and calibration.
 
@@ -73,7 +73,7 @@ python test_quant.py --model vit_small --config ./configs/3bit/best.py --dataset
 
 ## Results
 
-Below are the experimental results of our proposed APHQ-ViT that you should get on ImageNet dataset. Checkpoints are available in [Google Drive](https://drive.google.com/drive/folders/1w6KOlOmkx6HoTPFBJCk1mMN_ltsfYuai?usp=drive_link).
+Below are the experimental results of our proposed APHQ-ViT that you should get on the ImageNet dataset. Checkpoints are available in [Google Drive](https://drive.google.com/drive/folders/1w6KOlOmkx6HoTPFBJCk1mMN_ltsfYuai?usp=drive_link).
 
 | Model | **Full Prec.** | **MLP Recon.** | **W4/A4** | **W3/A3** |
 |:----------:|:--------------:|:--------------:|:---------:|:---------:|
